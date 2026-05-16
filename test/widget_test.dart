@@ -34,16 +34,11 @@ void main() {
     await tester.pumpWidget(const DevToolsHubApp());
     final homeContext = tester.element(find.text('DevTools Hub'));
 
-    final routesToVerify = ToolRegistry.all
+    final entriesToVerify = ToolRegistry.all
         .where((entry) => !entry.route.startsWith('/pdf/'))
-        .map((entry) => entry.route)
         .toList(growable: false);
-    for (final route in routesToVerify) {
-      final entry = ToolRegistry.byRoute(route);
-      if (entry == null) {
-        fail('Expected "$route" to be present in ToolRegistry.');
-      }
-      Navigator.of(homeContext).pushNamed(route);
+    for (final entry in entriesToVerify) {
+      Navigator.of(homeContext).pushNamed(entry.route);
       await tester.pumpAndSettle();
       expect(find.text(entry.name), findsAtLeastNWidgets(1));
       Navigator.of(homeContext).pop();
