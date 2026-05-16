@@ -41,7 +41,7 @@ class _PasswordGeneratorScreenState extends State<PasswordGeneratorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Password Generator'),
+        title: const Text('Token Generator'),
         actions: [CopyButton(text: _generated, label: 'Copy')],
       ),
       body: ListView(
@@ -121,4 +121,3 @@ class _PasswordGeneratorScreenState extends State<PasswordGeneratorScreen> {
     );
   }
 }
-
