@@ -34,7 +34,10 @@ void main() {
     await tester.pumpWidget(const DevToolsHubApp());
     final homeContext = tester.element(find.text('DevTools Hub'));
 
-    final routesToVerify = ['/dev/base64', '/text/tokens'];
+    final routesToVerify = ToolRegistry.all
+        .where((entry) => !entry.route.startsWith('/pdf/'))
+        .map((entry) => entry.route)
+        .toList(growable: false);
     for (final route in routesToVerify) {
       final entry = ToolRegistry.byRoute(route);
       if (entry == null) {
