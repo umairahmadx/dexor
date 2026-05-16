@@ -43,7 +43,7 @@ class _Base64ScreenState extends State<Base64Screen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Base64 Encoder'),
+        title: const Text('Base64 Encoder/Decoder'),
         actions: [
           IconButton(
             icon: const Icon(Icons.swap_horiz),

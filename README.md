@@ -6,7 +6,7 @@
 
 ### 15 Production-Ready Tools
 - **JSON Formatter** — Format, minify, validate JSON
-- **Base64 Encoder** — Text ↔ Base64 conversion
+- **Base64 Encoder/Decoder** — Text ↔ Base64 conversion
 - **URL Parser** — Decompose and reconstruct URLs
 - **HTML Entities** — Escape/unescape markup
 - **Regex Tester** — Pattern matching with live feedback
