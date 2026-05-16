@@ -36,10 +36,15 @@ void main() {
 
     final routesToVerify = ['/dev/base64', '/text/tokens'];
     for (final route in routesToVerify) {
-      final entry = ToolRegistry.byRoute(route)!;
+      final entry = ToolRegistry.byRoute(route);
+      expect(
+        entry,
+        isNotNull,
+        reason: 'Expected "$route" to be present in ToolRegistry.',
+      );
       Navigator.of(homeContext).pushNamed(route);
       await tester.pumpAndSettle();
-      expect(find.text(entry.name), findsWidgets);
+      expect(find.text(entry!.name), findsWidgets);
       Navigator.of(homeContext).pop();
       await tester.pumpAndSettle();
     }
