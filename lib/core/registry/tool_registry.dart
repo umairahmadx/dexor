@@ -21,7 +21,7 @@ class ToolRegistry {
     ),
     _tool(
       'base64',
-      'Base64 Encoder',
+      'Base64 Encoder/Decoder',
       'Encode or decode Base64 text and files.',
       Icons.swap_horiz,
       'Dev Tools',

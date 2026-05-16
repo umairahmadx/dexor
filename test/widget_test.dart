@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:dexor/app.dart';
+import 'package:dexor/core/registry/tool_registry.dart';
 import 'package:dexor/features/pdf_tools/pdf_toolkit_models.dart';
 import 'package:dexor/features/pdf_tools/pdf_toolkit_screen.dart';
 
@@ -25,5 +26,23 @@ void main() {
     expect(find.text('Security'), findsOneWidget);
     expect(find.text('Redact PDF'), findsAtLeastNWidgets(1));
     expect(find.text('Redaction mode'), findsOneWidget);
+  });
+
+  testWidgets('Implemented tool screens keep registry title consistency', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const DevToolsHubApp());
+    final homeContext = tester.element(find.text('DevTools Hub'));
+
+    final entriesToVerify = ToolRegistry.all
+        .where((entry) => !entry.route.startsWith('/pdf/'))
+        .toList(growable: false);
+    for (final entry in entriesToVerify) {
+      Navigator.of(homeContext).pushNamed(entry.route);
+      await tester.pumpAndSettle();
+      expect(find.text(entry.name), findsAtLeastNWidgets(1));
+      Navigator.of(homeContext).pop();
+      await tester.pumpAndSettle();
+    }
   });
 }

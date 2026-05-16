@@ -119,4 +119,3 @@ class _Base64ScreenState extends State<Base64Screen> {
     );
   }
 }
-
