@@ -42,7 +42,7 @@ void main() {
       }
       Navigator.of(homeContext).pushNamed(route);
       await tester.pumpAndSettle();
-      expect(find.text(entry.name), findsWidgets);
+      expect(find.text(entry.name), findsAtLeastNWidgets(1));
       Navigator.of(homeContext).pop();
       await tester.pumpAndSettle();
     }
