@@ -23,17 +23,22 @@ class _Base64ScreenState extends State<Base64Screen> {
         if (_isEncoding) {
           _output = base64Encode(utf8.encode(_input));
           if (_urlSafe) {
-            _output = _output.replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+            _output = _output
+                .replaceAll('+', '-')
+                .replaceAll('/', '_')
+                .replaceAll('=', '');
           }
         } else {
-          final decoded = _urlSafe ? _input.replaceAll('-', '+').replaceAll('_', '/') : _input;
+          final decoded = _urlSafe
+              ? _input.replaceAll('-', '+').replaceAll('_', '/')
+              : _input;
           _output = utf8.decode(base64Decode(decoded));
         }
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -60,7 +65,12 @@ class _Base64ScreenState extends State<Base64Screen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12),
-                    child: Text(_isEncoding ? 'Text' : 'Base64', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                    child: Text(
+                      _isEncoding ? 'Text' : 'Base64',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: Padding(
@@ -85,15 +95,25 @@ class _Base64ScreenState extends State<Base64Screen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(_isEncoding ? 'Base64' : 'Text', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-                        SwitchListTile.adaptive(
-                          contentPadding: EdgeInsets.zero,
-                          title: const Text('URL-safe'),
-                          value: _urlSafe,
-                          onChanged: (value) {
-                            setState(() => _urlSafe = value);
-                            _transform();
-                          },
+                        Text(
+                          _isEncoding ? 'Base64' : 'Text',
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text('URL-safe'),
+                            const SizedBox(width: 8),
+                            Switch.adaptive(
+                              value: _urlSafe,
+                              onChanged: (value) {
+                                setState(() => _urlSafe = value);
+                                _transform();
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),

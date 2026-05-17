@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/settings/app_settings.dart';
 import '../../core/registry/tool_registry.dart';
-import '../../core/theme/app_colors.dart';
 
 class PreferencesScreen extends StatefulWidget {
   const PreferencesScreen({super.key});
@@ -26,7 +25,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         title: const Text('Preferences'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pushNamed(ToolRegistry.homeRoute),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(ToolRegistry.homeRoute),
             child: const Text('Home'),
           ),
           const SizedBox(width: 8),
@@ -37,7 +37,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         children: [
           Text(
             'App Preferences',
-            style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -57,7 +59,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                     _ThemeChoice(
                       label: 'System',
                       selected: _settings.themeMode == ThemeMode.system,
-                      onSelected: () => _settings.setThemeMode(ThemeMode.system),
+                      onSelected: () =>
+                          _settings.setThemeMode(ThemeMode.system),
                     ),
                     _ThemeChoice(
                       label: 'Light',
@@ -72,37 +75,56 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                Text('Accent color', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                Text(
+                  'Accent color',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Wrap(
                   spacing: 12,
                   runSpacing: 12,
                   children: [
-                    for (var index = 0; index < AppSettings.accentSwatches.length; index++)
+                    for (
+                      var index = 0;
+                      index < AppSettings.accentSwatches.length;
+                      index++
+                    )
                       _AccentChoice(
                         label: AppSettings.accentLabels[index],
                         color: AppSettings.accentSwatches[index],
                         selected: _settings.accentIndex == index,
-                        onSelected: () => setState(() => _settings.setAccentIndex(index)),
+                        onSelected: () =>
+                            setState(() => _settings.setAccentIndex(index)),
                       ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                Text('Font scale', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                Text(
+                  'Font scale',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 Slider(
                   value: _settings.fontScale,
                   min: 0.9,
                   max: 1.2,
                   divisions: 3,
                   label: _settings.fontScale.toStringAsFixed(2),
-                  onChanged: (value) => setState(() => _settings.setFontScale(value)),
+                  onChanged: (value) =>
+                      setState(() => _settings.setFontScale(value)),
                 ),
                 SwitchListTile.adaptive(
                   contentPadding: EdgeInsets.zero,
                   title: const Text('Compact mode'),
-                  subtitle: const Text('Tightens cards and panels for denser layouts.'),
+                  subtitle: const Text(
+                    'Tightens cards and panels for denser layouts.',
+                  ),
                   value: _settings.compactMode,
-                  onChanged: (value) => setState(() => _settings.toggleCompactMode(value)),
+                  onChanged: (value) =>
+                      setState(() => _settings.toggleCompactMode(value)),
                 ),
               ],
             ),
@@ -129,7 +151,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 FilledButton.tonalIcon(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Local history would be cleared here.')),
+                      const SnackBar(
+                        content: Text('Local history would be cleared here.'),
+                      ),
                     );
                   },
                   icon: const Icon(Icons.delete_outline),
@@ -138,7 +162,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 OutlinedButton.icon(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Export settings placeholder triggered.')),
+                      const SnackBar(
+                        content: Text('Export settings placeholder triggered.'),
+                      ),
                     );
                   },
                   icon: const Icon(Icons.upload_outlined),
@@ -147,7 +173,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 OutlinedButton.icon(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Import settings placeholder triggered.')),
+                      const SnackBar(
+                        content: Text('Import settings placeholder triggered.'),
+                      ),
                     );
                   },
                   icon: const Icon(Icons.download_outlined),
@@ -218,7 +246,12 @@ class _SectionCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+              Text(
+                title,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+              ),
               const SizedBox(height: 12),
               child,
             ],
@@ -230,7 +263,11 @@ class _SectionCard extends StatelessWidget {
 }
 
 class _ThemeChoice extends StatelessWidget {
-  const _ThemeChoice({required this.label, required this.selected, required this.onSelected});
+  const _ThemeChoice({
+    required this.label,
+    required this.selected,
+    required this.onSelected,
+  });
 
   final String label;
   final bool selected;
@@ -241,14 +278,21 @@ class _ThemeChoice extends StatelessWidget {
     return ChoiceChip(
       label: Text(label),
       selected: selected,
-      selectedColor: AppColors.cyan.withValues(alpha: 0.14),
+      selectedColor: Theme.of(
+        context,
+      ).colorScheme.primary.withValues(alpha: 0.14),
       onSelected: (_) => onSelected(),
     );
   }
 }
 
 class _AccentChoice extends StatelessWidget {
-  const _AccentChoice({required this.label, required this.color, required this.selected, required this.onSelected});
+  const _AccentChoice({
+    required this.label,
+    required this.color,
+    required this.selected,
+    required this.onSelected,
+  });
 
   final String label;
   final Color color;
@@ -292,4 +336,3 @@ class _BulletedList extends StatelessWidget {
     );
   }
 }
-

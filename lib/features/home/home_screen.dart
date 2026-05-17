@@ -23,25 +23,36 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             tooltip: 'Command palette',
-            onPressed: () => showSearch(context: context, delegate: ToolSearchDelegate()),
+            onPressed: () =>
+                showSearch(context: context, delegate: ToolSearchDelegate()),
             icon: const Icon(Icons.search),
           ),
           IconButton(
             tooltip: 'Preferences',
-            onPressed: () => Navigator.of(context).pushNamed(ToolRegistry.preferencesRoute),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(ToolRegistry.preferencesRoute),
             icon: const Icon(Icons.settings_outlined),
           ),
           const SizedBox(width: 8),
         ],
       ),
-      drawer: isDesktop ? null : Drawer(child: _Sidebar(onSelectTool: (route) => Navigator.of(context).pushNamed(route))),
+      drawer: isDesktop
+          ? null
+          : Drawer(
+              child: _Sidebar(
+                onSelectTool: (route) => Navigator.of(context).pushNamed(route),
+              ),
+            ),
       body: SafeArea(
         child: Row(
           children: [
             if (isDesktop)
               SizedBox(
                 width: compactMode ? 280 : 300,
-                child: _Sidebar(onSelectTool: (route) => Navigator.of(context).pushNamed(route)),
+                child: _Sidebar(
+                  onSelectTool: (route) =>
+                      Navigator.of(context).pushNamed(route),
+                ),
               ),
             Expanded(
               child: ListView(
@@ -49,7 +60,9 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Offline-first developer utilities',
-                    style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -61,9 +74,18 @@ class HomeScreen extends StatelessWidget {
                     spacing: sectionSpacing,
                     runSpacing: sectionSpacing,
                     children: [
-                      const _StatusChip(label: '100% Local Processing', color: AppColors.green),
-                      _StatusChip(label: '${ToolRegistry.all.length} tools registered', color: theme.colorScheme.primary),
-                      const _StatusChip(label: 'Command palette ready', color: AppColors.blue),
+                      const _StatusChip(
+                        label: '100% Local Processing',
+                        color: AppColors.green,
+                      ),
+                      _StatusChip(
+                        label: '${ToolRegistry.all.length} tools registered',
+                        color: theme.colorScheme.primary,
+                      ),
+                      const _StatusChip(
+                        label: 'Command palette ready',
+                        color: AppColors.blue,
+                      ),
                     ],
                   ),
                   SizedBox(height: sectionSpacing * 2),
@@ -84,14 +106,15 @@ class HomeScreen extends StatelessWidget {
                   _SectionCard(
                     title: 'Recent tools',
                     child: Wrap(
-                                  spacing: sectionSpacing,
-                                  runSpacing: sectionSpacing,
+                      spacing: sectionSpacing,
+                      runSpacing: sectionSpacing,
                       children: [
                         for (final entry in ToolRegistry.recentSeed)
                           ActionChip(
                             avatar: Icon(entry.icon, size: 18),
                             label: Text(entry.name),
-                            onPressed: () => Navigator.of(context).pushNamed(entry.route),
+                            onPressed: () =>
+                                Navigator.of(context).pushNamed(entry.route),
                           ),
                       ],
                     ),
@@ -99,7 +122,9 @@ class HomeScreen extends StatelessWidget {
                   _SectionCard(
                     title: 'Featured tools',
                     child: GridView.count(
-                      crossAxisCount: MediaQuery.sizeOf(context).width >= 1200 ? 3 : 2,
+                      crossAxisCount: MediaQuery.sizeOf(context).width >= 1200
+                          ? 3
+                          : 2,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       crossAxisSpacing: sectionSpacing,
@@ -109,13 +134,18 @@ class HomeScreen extends StatelessWidget {
                         for (final entry in ToolRegistry.all.take(6))
                           _ToolCard(
                             entry: entry,
-                            onTap: () => Navigator.of(context).pushNamed(entry.route),
+                            onTap: () =>
+                                Navigator.of(context).pushNamed(entry.route),
                           ),
                       ],
                     ),
                   ),
                   SizedBox(height: sectionSpacing),
-                  _StatusBar(platformLabel: _platformLabelFor(context), contextLabel: 'Dashboard ready · tap any route to open a tool shell'),
+                  _StatusBar(
+                    platformLabel: _platformLabelFor(context),
+                    contextLabel:
+                        'Dashboard ready · tap any route to open a tool shell',
+                  ),
                 ],
               ),
             ),
@@ -141,29 +171,42 @@ class _Sidebar extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.all(compactMode ? 12 : 16),
         children: [
-          Text('CATEGORIES', style: theme.textTheme.labelLarge?.copyWith(letterSpacing: 1.2)),
+          Text(
+            'CATEGORIES',
+            style: theme.textTheme.labelLarge?.copyWith(letterSpacing: 1.2),
+          ),
           const SizedBox(height: 12),
           for (final category in ToolRegistry.categories)
             ListTile(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               title: Text(category),
-              subtitle: Text('${ToolRegistry.byCategory(category).length} tools'),
+              subtitle: Text(
+                '${ToolRegistry.byCategory(category).length} tools',
+              ),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => _openCategory(context, category),
             ),
           const SizedBox(height: 16),
-          Text('RECENT', style: theme.textTheme.labelLarge?.copyWith(letterSpacing: 1.2)),
+          Text(
+            'RECENT',
+            style: theme.textTheme.labelLarge?.copyWith(letterSpacing: 1.2),
+          ),
           const SizedBox(height: 12),
           for (final entry in ToolRegistry.recentSeed)
             ListTile(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               leading: Icon(entry.icon, color: theme.colorScheme.primary),
               title: Text(entry.name),
               onTap: () => onSelectTool(entry.route),
             ),
           const SizedBox(height: 16),
           FilledButton.tonalIcon(
-            onPressed: () => Navigator.of(context).pushNamed(ToolRegistry.preferencesRoute),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(ToolRegistry.preferencesRoute),
             icon: const Icon(Icons.settings),
             label: const Text('Preferences'),
           ),
@@ -189,7 +232,12 @@ class _SectionCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+              Text(
+                title,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+              ),
               const SizedBox(height: 12),
               child,
             ],
@@ -219,13 +267,20 @@ class _CategoryCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outlineVariant,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(category, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+            Text(
+              category,
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+            ),
             const SizedBox(height: 4),
             Text('${tools.length} tools'),
           ],
@@ -252,8 +307,10 @@ class _ToolCard extends StatelessWidget {
           child: Row(
             children: [
               CircleAvatar(
-                  backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.14),
-                    foregroundColor: Theme.of(context).colorScheme.primary,
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.14),
+                foregroundColor: Theme.of(context).colorScheme.primary,
                 child: Icon(entry.icon),
               ),
               const SizedBox(width: 12),
@@ -262,9 +319,18 @@ class _ToolCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(entry.name, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                    Text(
+                      entry.name,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text(entry.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                    Text(
+                      entry.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
                 ),
               ),
@@ -345,15 +411,20 @@ void _openCategory(BuildContext context, String category) {
     context: context,
     showDragHandle: true,
     builder: (sheetContext) {
-       return ListView.separated(
-         padding: const EdgeInsets.all(16),
-         itemCount: tools.length,
-         separatorBuilder: (_, _) => const SizedBox(height: 8),
-         itemBuilder: (context, index) {
+      return ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: tools.length,
+        separatorBuilder: (_, _) => const SizedBox(height: 8),
+        itemBuilder: (context, index) {
           final entry = tools[index];
           return ListTile(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            leading: Icon(entry.icon, color: AppColors.cyan),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            leading: Icon(
+              entry.icon,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             title: Text(entry.name),
             subtitle: Text(entry.description),
             onTap: () {
@@ -366,5 +437,3 @@ void _openCategory(BuildContext context, String category) {
     },
   );
 }
-
-

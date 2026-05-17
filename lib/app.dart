@@ -4,6 +4,7 @@ import 'core/settings/app_settings.dart';
 import 'core/theme/app_theme.dart';
 import 'core/registry/tool_registry.dart';
 import 'core/routing/app_router.dart';
+import 'core/widgets/app_experience_frame.dart';
 
 class DevToolsHubApp extends StatelessWidget {
   const DevToolsHubApp({super.key});
@@ -33,7 +34,9 @@ class DevToolsHubApp extends StatelessWidget {
               data: mediaQuery.copyWith(
                 textScaler: TextScaler.linear(AppSettings.instance.fontScale),
               ),
-              child: child ?? const SizedBox.shrink(),
+              child: AppExperienceFrame(
+                child: child ?? const SizedBox.shrink(),
+              ),
             );
           },
         );
@@ -41,4 +44,3 @@ class DevToolsHubApp extends StatelessWidget {
     );
   }
 }
-

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../theme/app_colors.dart';
+import '../theme/app_tokens.dart';
+
 class ThemedCodeEditor extends StatefulWidget {
   const ThemedCodeEditor({
     super.key,
@@ -59,17 +62,33 @@ class _ThemedCodeEditorState extends State<ThemedCodeEditor> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return TextField(
-      controller: _controller,
-      minLines: widget.minLines,
-      maxLines: widget.maxLines,
-      readOnly: widget.readOnly,
-      decoration: InputDecoration(
-        hintText: widget.hint,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        contentPadding: const EdgeInsets.all(12),
+    return AnimatedContainer(
+      duration: AppTokens.fast,
+      curve: AppTokens.standardCurve,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppTokens.radiusSm),
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme.primary.withValues(alpha: 0.06),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
-      style: theme.textTheme.bodyMedium?.copyWith(fontFamily: 'monospace'),
+      child: TextField(
+        controller: _controller,
+        minLines: widget.minLines,
+        maxLines: widget.maxLines,
+        readOnly: widget.readOnly,
+        decoration: InputDecoration(
+          hintText: widget.hint,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(AppTokens.radiusSm),
+          ),
+          contentPadding: const EdgeInsets.all(12),
+        ),
+        style: theme.textTheme.bodyMedium?.copyWith(fontFamily: 'monospace'),
+      ),
     );
   }
 }
@@ -141,11 +160,13 @@ class ToolStatusBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        border: Border(top: BorderSide(color: theme.colorScheme.outlineVariant)),
+        border: Border(
+          top: BorderSide(color: theme.colorScheme.outlineVariant),
+        ),
       ),
       child: Row(
         children: [
-          const Icon(Icons.circle, size: 10, color: Color(0xFF00D68F)),
+          const Icon(Icons.circle, size: 10, color: AppColors.valid),
           const SizedBox(width: 8),
           Expanded(
             child: Wrap(
@@ -177,9 +198,9 @@ class _CopyButtonState extends State<CopyButton> {
     return FilledButton.tonalIcon(
       onPressed: () {
         Clipboard.setData(ClipboardData(text: widget.text));
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${widget.label} copied!')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('${widget.label} copied!')));
         setState(() => _copied = true);
         Future.delayed(const Duration(seconds: 2), () {
           if (mounted) setState(() => _copied = false);

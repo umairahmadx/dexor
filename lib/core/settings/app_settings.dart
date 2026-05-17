@@ -12,7 +12,7 @@ class AppSettings extends ChangeNotifier {
     AppColors.blue,
     AppColors.green,
     AppColors.amber,
-    Color(0xFFFF5C93),
+    AppColors.pink,
   ];
 
   static const accentLabels = <String>[
@@ -68,4 +68,3 @@ class AppSettings extends ChangeNotifier {
     notifyListeners();
   }
 }
-

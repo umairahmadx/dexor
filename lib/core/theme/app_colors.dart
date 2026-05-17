@@ -24,10 +24,13 @@ class AppColors {
   static const green = Color(0xFF00D68F);
   static const amber = Color(0xFFFFB830);
   static const blue = Color(0xFF4D9FFF);
+  static const pink = Color(0xFFFF5C93);
+  static const textLight = Color(0xFF101114);
+  static const textDark = Colors.white;
 
   // Semantic.
   static const valid = green;
   static const invalid = red;
   static const warning = amber;
+  static const info = blue;
 }
-
