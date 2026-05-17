@@ -20,6 +20,17 @@ import 'package:dexor/features/developer_tools/jwt_decoder/jwt_decoder_screen.da
 import 'package:dexor/features/developer_tools/yaml_to_json/yaml_to_json_screen.dart';
 import 'package:dexor/features/text_data/token_generator/token_generator_screen.dart';
 import 'package:dexor/features/image/color_picker/color_picker_screen.dart';
+import 'package:dexor/features/image/image_resizer/image_resizer_screen.dart';
+import 'package:dexor/features/image/image_compressor/image_compressor_screen.dart';
+import 'package:dexor/features/image/image_converter/image_converter_screen.dart';
+import 'package:dexor/features/image/background_remover/background_remover_screen.dart';
+import 'package:dexor/features/image/image_rotator/image_rotator_screen.dart';
+import 'package:dexor/features/image/ocr/ocr_screen.dart';
+import 'package:dexor/features/image/qr_generator/qr_generator_screen.dart';
+import 'package:dexor/features/image/social_media_resizer/social_media_resizer_screen.dart';
+import 'package:dexor/features/image/batch_processor/batch_processor_screen.dart';
+import 'package:dexor/features/image/svg_optimizer/svg_optimizer_screen.dart';
+import 'package:dexor/features/image/exif_viewer/exif_viewer_screen.dart';
 import 'package:dexor/features/colors/contrast_checker/contrast_checker_screen.dart';
 import 'package:dexor/features/colors/palette_generator/palette_generator_screen.dart';
 import 'package:dexor/features/datetime/unix_timestamp/unix_timestamp_screen.dart';
@@ -156,6 +167,83 @@ class AppRouter {
       return MaterialPageRoute<void>(
         settings: settings,
         builder: (_) => const ColorPickerScreen(),
+      );
+    }
+
+    if (name == '/image/svg-optimizer') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const SvgOptimizerScreen(),
+      );
+    }
+
+    if (name == '/image/exif') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const ExifViewerScreen(),
+      );
+    }
+
+    if (name == '/image/resizer') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const ImageResizerScreen(),
+      );
+    }
+
+    if (name == '/image/compress') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const ImageCompressorScreen(),
+      );
+    }
+
+    if (name == '/image/convert') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const ImageConverterScreen(),
+      );
+    }
+
+    if (name == '/image/bg-remover') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const BackgroundRemoverScreen(),
+      );
+    }
+
+    if (name == '/image/rotate') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const ImageRotatorScreen(),
+      );
+    }
+
+    if (name == '/image/ocr') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const OcrScreen(),
+      );
+    }
+
+    if (name == '/image/qr') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const QrGeneratorScreen(),
+      );
+    }
+
+    if (name == '/image/social-resizer') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const SocialMediaResizerScreen(),
+      );
+    }
+
+    if (name == '/image/batch') {
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const BatchProcessorScreen(),
       );
     }
 
